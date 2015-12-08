@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!-- <context:property-placeholder location="classpath:mq.properties" /> -->
+
+    <bean id="systemConfig" class="com.beehive.erp.schedule.common.SystemContext">
+        <property name="SystemMap">
+            <map>
+                <entry key="brokerURL" value="${jms_server_url}"/>
+            </map>
+        </property>
+    </bean>
+	
+	<bean id="jmsQueueReceive" class="com.beehive.erp.schedule.runtime.jms.receive.JmsReceiver">
+		<property name="connectionFactory" ref="jmsFactoryReceive" />
+		<property name="destinationName" value="${order_import_topic}" />
+
+		<property name="messageListener">
+			<bean class="com.beehive.erp.taobao.order.biz.jms.OrderImportTopicListener" >
+			</bean>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beehive.erp.taobao.dao.TestDataDao">
+
+    <insert id="insertData" parameterType="com.beehive.erp.model.TestData">
+        insert into TESTDATA(NUB,CONTENT) values (#{nub},#{content});
+    </insert>
+
+</mapper>
