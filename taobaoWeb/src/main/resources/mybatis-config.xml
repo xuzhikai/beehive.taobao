@@ -9,7 +9,7 @@
 
 
     <typeHandlers>
-        <typeHandler handler="com.heima.dao.Mapper.StreamSaveHandler"/>
+        <typeHandler handler="com.beehive.erp.taobao.dao.Mapper.StreamSaveHandler"/>
     </typeHandlers>
 
 
