@@ -10,7 +10,7 @@
 	<packaging>pom</packaging>
 	<name>taobao</name>
 
-	<properties>
+    <properties>
         <package.environment>test</package.environment>
 
 		<!-- Generic properties -->
@@ -407,6 +407,12 @@
                         <artifactId>slf4j-api</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.api</groupId>
+                <artifactId>taobao-api</artifactId>
+                <version>20151205</version>
             </dependency>
 
         </dependencies>
