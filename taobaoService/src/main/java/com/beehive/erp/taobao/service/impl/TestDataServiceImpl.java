@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
  * Created by xuzhikai on 2015/12/7.
  */
 @Service
-public enum TestDataServiceImpl implements TestDataService {
+public class TestDataServiceImpl implements TestDataService {
 }
