@@ -23,6 +23,6 @@ public class TestDataServiceTest {
 
     @Test
     public void testData(){
-
+        System.out.println("xxx");
     }
 }
