@@ -2,6 +2,7 @@ package com.beehive.erp.taobao.order.biz.impl;
 
 import com.beehive.erp.model.Shopinfo;
 import com.beehive.erp.taobao.order.biz.OrderImportBizHandler;
+import com.beehive.erp.taobao.order.biz.constant.Constant;
 import com.beehive.erp.taobao.order.biz.convert.ShopConvert;
 import com.beehive.erp.taobao.service.ShopinfoService;
 import com.beehive.erp.taobao.service.impl.ShopinfoServiceImpl;
@@ -98,7 +99,7 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
 
         req.setPage(1L);
 
-        req.setPageSize(20l);
+        req.setPageSize(Constant.PAGE_SIZE);
 
         WaimaiShopListResponse res = client.execute(req,SESSIONKEY);
 
