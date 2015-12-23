@@ -6,6 +6,8 @@ import com.beehive.erp.taobao.service.ShopinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by 863 on 2015/12/22.
  */
@@ -30,6 +32,11 @@ public class ShopinfoServiceImpl implements ShopinfoService{
     @Override
     public void deleteByShopid(Integer shopid) {
         shopinfoDao.deleteByShopid(shopid);
+    }
+
+    @Override
+    public List<Shopinfo> findAll() {
+        return shopinfoDao.findAll();
     }
 }
 
