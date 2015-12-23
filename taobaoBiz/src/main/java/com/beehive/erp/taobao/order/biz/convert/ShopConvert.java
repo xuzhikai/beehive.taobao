@@ -1,10 +1,10 @@
 package com.beehive.erp.taobao.order.biz.convert;
 
-import java.util.List;
-
 import com.beehive.erp.model.Shopinfo;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
+import java.util.List;
 
 public class ShopConvert {
     /**
