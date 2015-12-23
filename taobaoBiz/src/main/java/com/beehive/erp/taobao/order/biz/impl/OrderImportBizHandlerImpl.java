@@ -1,14 +1,19 @@
 package com.beehive.erp.taobao.order.biz.impl;
 
+import com.beehive.erp.model.Item;
 import com.beehive.erp.model.Shopinfo;
 import com.beehive.erp.taobao.order.biz.OrderImportBizHandler;
 import com.beehive.erp.taobao.order.biz.constant.Constant;
+import com.beehive.erp.taobao.order.biz.convert.ItemConvert;
 import com.beehive.erp.taobao.order.biz.convert.ShopConvert;
+import com.beehive.erp.taobao.service.ItemService;
 import com.beehive.erp.taobao.service.ShopinfoService;
 import com.beehive.erp.taobao.service.impl.ShopinfoServiceImpl;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
+import com.taobao.api.request.WaimaiItemlistGetRequest;
 import com.taobao.api.request.WaimaiShopListRequest;
+import com.taobao.api.response.WaimaiItemlistGetResponse;
 import com.taobao.api.response.WaimaiShopListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +40,10 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
     private AtomicBoolean isRun=new AtomicBoolean(false);
 
     @Autowired
-    private ShopinfoService shopinfoService = new ShopinfoServiceImpl();
+    private ShopinfoService shopinfoService;
+
+    @Autowired
+    private ItemService itemService;
 
     @Override
     public boolean orderImport(Date startDate) {
@@ -45,29 +53,12 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
             logger.info("begin order import");
             try
             {
-                //TODO:监听器调用，处理开始
-                //获取套淘点点商店列表
-                List<Shopinfo> shopinfos = getShopList();
+                //TODO:监听器调用，处理开始.
+                //淘点点店铺导入
+                shopinfoImport();
+                //商品信息导入
+                itemImport();
 
-                if (null!=shopinfos && shopinfos.size()>0){
-                    //循环所有商铺信息
-                    for (Shopinfo shopinfo:shopinfos){
-                        //商铺ID
-                        int shopid = shopinfo.getShopid();
-                        //查询是否存在该商铺
-                        int count = shopinfoService.selectByShopid(shopid);
-
-                        if(count>0){
-                            //如果存在先删除
-                            shopinfoService.deleteByShopid(shopid);
-                        } else{
-                            //否则插入
-                            shopinfoService.insert(shopinfo);
-                        }
-                    }
-                }else{
-                    logger.info("淘点点应用汇总没有商铺信息！");
-                }
             }
             catch (Exception exp)
             {
@@ -92,14 +83,14 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
      * @return
      * @throws Exception
      */
-    private List<Shopinfo> getShopList()throws Exception{
+    public List<Shopinfo> getShopList()throws Exception{
         TaobaoClient client = new DefaultTaobaoClient(URL, APPKEY, APPSECRET);
 
         WaimaiShopListRequest req = new WaimaiShopListRequest();
 
-        req.setPage(1L);
+        req.setPage(Constant.PAGE_NUM_SHOP);
 
-        req.setPageSize(Constant.PAGE_SIZE);
+        req.setPageSize(Constant.PAGE_SIZE_SHOP);
 
         WaimaiShopListResponse res = client.execute(req,SESSIONKEY);
 
@@ -108,4 +99,100 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
         return shopConvert.analyticJson(res.getBody());
 
     }
+
+    /**
+     * 导入店铺信息
+     * @throws Exception
+     */
+    public void shopinfoImport()throws Exception{
+        //获取淘点点商店列表
+        List<Shopinfo> shopinfos = getShopList();
+
+        if (null!=shopinfos && shopinfos.size()>0){
+            //循环所有商铺信息
+            for (Shopinfo shopinfo:shopinfos){
+                //商铺ID
+                int shopid = shopinfo.getShopid();
+                //查询是否存在该商铺
+                int count = shopinfoService.selectByShopid(shopid);
+
+                if(count>0){
+                    //如果存在先删除
+                    shopinfoService.deleteByShopid(shopid);
+                    //插入
+                    shopinfoService.insert(shopinfo);
+                } else{
+                    //否则插入
+                    shopinfoService.insert(shopinfo);
+                }
+            }
+        }else{
+            logger.info("淘点点应用没有商铺信息！");
+        }
+    }
+    /**
+     * 获取外卖商品列表，并将json解析为List
+     * @return
+     * @throws Exception
+     */
+    public void itemImport()throws Exception{
+
+        //获取所有的店铺
+        List<Shopinfo> shopinfos= shopinfoService.findAll();
+        //循环所有店铺
+        if (null!=shopinfos && shopinfos.size()>0){
+            for (Shopinfo shopinfo:shopinfos){
+                //查看该商铺下是否有产品
+                int count =itemService.selectByShopIdCount(shopinfo.getShopid());
+                //如果有则全部删除
+                if (count>0){
+                    itemService.deleteByShopId(shopinfo.getShopid());
+                }
+                //获取同步的产品列表
+                List<Item> items = getItemList(shopinfo.getShopid());
+
+                if (null!=items && items.size()>0){
+                    for (Item item:items){
+                        item.setShopid(shopinfo.getShopid());
+                        //插入到db中
+                        itemService.insertSelective(item);
+                    }
+                }else{
+                    logger.info("该店铺没有商品！");
+                }
+            }
+        } else{
+            logger.info("淘点点应用没有商铺信息！");
+        }
+    }
+
+    /**
+     * 根据商铺ID获取产品json，并解析为list
+     * @param shopid
+     * @return
+     */
+    public List<Item> getItemList(Integer shopid)throws Exception{
+        TaobaoClient client = new DefaultTaobaoClient(URL, APPKEY, APPSECRET);
+
+        WaimaiItemlistGetRequest req = new WaimaiItemlistGetRequest();
+        //商铺id
+        req.setShopid(Long.valueOf(shopid));
+        //产品状态：全部0
+        req.setSalesStatus(Constant.SALES_STATUS);
+
+        req.setPageNo(Constant.PAGE_NUM_ITEM);
+
+        req.setPageSize(Constant.PAGE_SIZE_ITEM);
+        //要获取产品的字段
+        req.setFields(Constant.ITEM_FIELDS);
+
+        WaimaiItemlistGetResponse rsp = client.execute(req, SESSIONKEY);
+
+        ItemConvert itemConvert = new ItemConvert();
+
+        List<Item> items= itemConvert.analyticJson(rsp.getBody());
+
+        return items;
+    }
+
 }
