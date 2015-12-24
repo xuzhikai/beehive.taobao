@@ -33,6 +33,8 @@ public class Item {
 
     private Integer shopid;
 
+    private String sourceId;
+
     public Integer getSid() {
         return sid;
     }
@@ -152,5 +154,13 @@ public class Item {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
     }
 }

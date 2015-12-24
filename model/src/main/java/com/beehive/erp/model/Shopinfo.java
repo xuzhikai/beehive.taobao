@@ -25,6 +25,8 @@ public class Shopinfo {
 
     private String shopoutid;
 
+    private String sourceId;
+
     public Integer getSid() {
         return sid;
     }
@@ -119,5 +121,13 @@ public class Shopinfo {
 
     public void setShopoutid(String shopoutid) {
         this.shopoutid = shopoutid == null ? null : shopoutid.trim();
+    }
+
+    public String getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
     }
 }
