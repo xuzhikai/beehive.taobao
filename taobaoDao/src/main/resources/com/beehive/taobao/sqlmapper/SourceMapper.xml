@@ -76,4 +76,11 @@
         <include refid="Base_Column_List" />
         from sys_source
     </select>
+
+    <select id="selectBySourceId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_source
+    where source_id = #{source_id,jdbcType=VARCHAR}
+    </select>
 </mapper>

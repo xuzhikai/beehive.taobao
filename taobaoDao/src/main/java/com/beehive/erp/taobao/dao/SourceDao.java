@@ -10,4 +10,6 @@ import java.util.List;
 public interface SourceDao {
 
     List<Source> findAll();
+
+    Source selectBySourceId(String sourceId);
 }
