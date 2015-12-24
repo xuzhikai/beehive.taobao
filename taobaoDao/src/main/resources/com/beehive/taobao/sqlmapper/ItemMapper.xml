@@ -17,10 +17,11 @@
         <result column="old_quantity" property="oldQuantity" jdbcType="INTEGER" />
         <result column="create_time" property="createTime" jdbcType="VARCHAR" />
         <result column="modify_time" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="source_id" property="sourceId" jdbcType="VARCHAR" />
     </resultMap>
     <sql id="Base_Column_List" >
         sid, shopid, item_id, title, price, ori_price, goods_no, auction_status, quantity,
-        limit_buy, auction_desc, category_id, old_quantity, create_time, modify_time
+        limit_buy, auction_desc, category_id, old_quantity, create_time, modify_time, source_id
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
@@ -37,14 +38,14 @@
         title, price, ori_price,
         goods_no, auction_status, quantity,
         limit_buy, auction_desc, category_id,
-        old_quantity, create_time, modify_time
-        )
+        old_quantity, create_time, modify_time,
+        source_id)
         values (#{sid,jdbcType=INTEGER}, #{shopid,jdbcType=INTEGER}, #{itemId,jdbcType=VARCHAR},
         #{title,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{oriPrice,jdbcType=DECIMAL},
         #{goodsNo,jdbcType=VARCHAR}, #{auctionStatus,jdbcType=INTEGER}, #{quantity,jdbcType=INTEGER},
         #{limitBuy,jdbcType=INTEGER}, #{auctionDesc,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR},
-        #{oldQuantity,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}
-        )
+        #{oldQuantity,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR},
+        #{sourceId,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.beehive.erp.model.Item" >
         insert into dd_itemlist
@@ -94,6 +95,9 @@
             <if test="modifyTime != null" >
                 modify_time,
             </if>
+            <if test="sourceId != null" >
+                source_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="sid != null" >
@@ -140,6 +144,9 @@
             </if>
             <if test="modifyTime != null" >
                 #{modifyTime,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceId != null" >
+                #{sourceId,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -188,6 +195,9 @@
             <if test="modifyTime != null" >
                 modify_time = #{modifyTime,jdbcType=VARCHAR},
             </if>
+            <if test="sourceId != null" >
+                source_id = #{sourceId,jdbcType=VARCHAR},
+            </if>
         </set>
         where sid = #{sid,jdbcType=INTEGER}
         and upd_eac =  ( #{updEac,jdbcType=BIGINT} -1)
@@ -207,7 +217,8 @@
       category_id = #{categoryId,jdbcType=VARCHAR},
       old_quantity = #{oldQuantity,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=VARCHAR},
-      modify_time = #{modifyTime,jdbcType=VARCHAR}
+      modify_time = #{modifyTime,jdbcType=VARCHAR},
+      source_id = #{sourceId,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=INTEGER}
       and upd_eac =  ( #{updEac,jdbcType=BIGINT} -1) 
   </update>

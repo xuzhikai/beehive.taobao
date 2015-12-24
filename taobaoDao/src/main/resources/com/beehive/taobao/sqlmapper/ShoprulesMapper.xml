@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.beehive.erp.taobao.dao.ShoprulesDao" >
+    <resultMap id="BaseResultMap" type="com.beehive.erp.model.Shoprules" >
+        <id column="sid" property="sid" jdbcType="INTEGER" />
+        <result column="service_tag" property="serviceTag" jdbcType="INTEGER" />
+        <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+        <result column="cate_id" property="cateId" jdbcType="INTEGER" />
+        <result column="delivery_time" property="deliveryTime" jdbcType="VARCHAR" />
+        <result column="delivery_amount" property="deliveryAmount" jdbcType="DECIMAL" />
+        <result column="minimum_amount" property="minimumAmount" jdbcType="DECIMAL" />
+        <result column="full_amount" property="fullAmount" jdbcType="DECIMAL" />
+        <result column="early_minutes" property="earlyMinutes" jdbcType="INTEGER" />
+        <result column="support_days" property="supportDays" jdbcType="INTEGER" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+        <result column="shopid" property="shopid" jdbcType="INTEGER" />
+        <result column="cateid" property="cateid" jdbcType="INTEGER" />
+        <result column="area_range" property="areaRange" jdbcType="VARCHAR" />
+        <result column="cash_on_delivery" property="cashOnDelivery" jdbcType="INTEGER" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="notice" property="notice" jdbcType="VARCHAR" />
+        <result column="support_reserved_days" property="supportReservedDays" jdbcType="VARCHAR" />
+        <result column="support_rest_time_order" property="supportRestTimeOrder" jdbcType="VARCHAR" />
+        <result column="source_id" property="sourceId" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        sid, service_tag, shop_id, cate_id, delivery_time, delivery_amount, minimum_amount,
+        full_amount, early_minutes, support_days, mobile, shop_name, shopid, cateid, area_range,
+        cash_on_delivery, phone, notice, support_reserved_days, support_rest_time_order,
+        source_id
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from dd_shoprules
+        where sid = #{sid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from dd_shoprules
+        where sid = #{sid,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.beehive.erp.model.Shoprules" >
+        insert into dd_shoprules (sid, service_tag, shop_id,
+        cate_id, delivery_time, delivery_amount,
+        minimum_amount, full_amount, early_minutes,
+        support_days, mobile, shop_name,
+        shopid, cateid, area_range,
+        cash_on_delivery, phone, notice,
+        support_reserved_days, support_rest_time_order,
+        source_id)
+        values (#{sid,jdbcType=INTEGER}, #{serviceTag,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER},
+        #{cateId,jdbcType=INTEGER}, #{deliveryTime,jdbcType=VARCHAR}, #{deliveryAmount,jdbcType=DECIMAL},
+        #{minimumAmount,jdbcType=DECIMAL}, #{fullAmount,jdbcType=DECIMAL}, #{earlyMinutes,jdbcType=INTEGER},
+        #{supportDays,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR},
+        #{shopid,jdbcType=INTEGER}, #{cateid,jdbcType=INTEGER}, #{areaRange,jdbcType=VARCHAR},
+        #{cashOnDelivery,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR},
+        #{supportReservedDays,jdbcType=VARCHAR}, #{supportRestTimeOrder,jdbcType=VARCHAR},
+        #{sourceId,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.beehive.erp.model.Shoprules" >
+        insert into dd_shoprules
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="sid != null" >
+                sid,
+            </if>
+            <if test="serviceTag != null" >
+                service_tag,
+            </if>
+            <if test="shopId != null" >
+                shop_id,
+            </if>
+            <if test="cateId != null" >
+                cate_id,
+            </if>
+            <if test="deliveryTime != null" >
+                delivery_time,
+            </if>
+            <if test="deliveryAmount != null" >
+                delivery_amount,
+            </if>
+            <if test="minimumAmount != null" >
+                minimum_amount,
+            </if>
+            <if test="fullAmount != null" >
+                full_amount,
+            </if>
+            <if test="earlyMinutes != null" >
+                early_minutes,
+            </if>
+            <if test="supportDays != null" >
+                support_days,
+            </if>
+            <if test="mobile != null" >
+                mobile,
+            </if>
+            <if test="shopName != null" >
+                shop_name,
+            </if>
+            <if test="shopid != null" >
+                shopid,
+            </if>
+            <if test="cateid != null" >
+                cateid,
+            </if>
+            <if test="areaRange != null" >
+                area_range,
+            </if>
+            <if test="cashOnDelivery != null" >
+                cash_on_delivery,
+            </if>
+            <if test="phone != null" >
+                phone,
+            </if>
+            <if test="notice != null" >
+                notice,
+            </if>
+            <if test="supportReservedDays != null" >
+                support_reserved_days,
+            </if>
+            <if test="supportRestTimeOrder != null" >
+                support_rest_time_order,
+            </if>
+            <if test="sourceId != null" >
+                source_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="sid != null" >
+                #{sid,jdbcType=INTEGER},
+            </if>
+            <if test="serviceTag != null" >
+                #{serviceTag,jdbcType=INTEGER},
+            </if>
+            <if test="shopId != null" >
+                #{shopId,jdbcType=INTEGER},
+            </if>
+            <if test="cateId != null" >
+                #{cateId,jdbcType=INTEGER},
+            </if>
+            <if test="deliveryTime != null" >
+                #{deliveryTime,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryAmount != null" >
+                #{deliveryAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="minimumAmount != null" >
+                #{minimumAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="fullAmount != null" >
+                #{fullAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="earlyMinutes != null" >
+                #{earlyMinutes,jdbcType=INTEGER},
+            </if>
+            <if test="supportDays != null" >
+                #{supportDays,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null" >
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="shopName != null" >
+                #{shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="shopid != null" >
+                #{shopid,jdbcType=INTEGER},
+            </if>
+            <if test="cateid != null" >
+                #{cateid,jdbcType=INTEGER},
+            </if>
+            <if test="areaRange != null" >
+                #{areaRange,jdbcType=VARCHAR},
+            </if>
+            <if test="cashOnDelivery != null" >
+                #{cashOnDelivery,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null" >
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="notice != null" >
+                #{notice,jdbcType=VARCHAR},
+            </if>
+            <if test="supportReservedDays != null" >
+                #{supportReservedDays,jdbcType=VARCHAR},
+            </if>
+            <if test="supportRestTimeOrder != null" >
+                #{supportRestTimeOrder,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceId != null" >
+                #{sourceId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.beehive.erp.model.Shoprules" >
+        update dd_shoprules
+        <set >
+            <if test="serviceTag != null" >
+                service_tag = #{serviceTag,jdbcType=INTEGER},
+            </if>
+            <if test="shopId != null" >
+                shop_id = #{shopId,jdbcType=INTEGER},
+            </if>
+            <if test="cateId != null" >
+                cate_id = #{cateId,jdbcType=INTEGER},
+            </if>
+            <if test="deliveryTime != null" >
+                delivery_time = #{deliveryTime,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryAmount != null" >
+                delivery_amount = #{deliveryAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="minimumAmount != null" >
+                minimum_amount = #{minimumAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="fullAmount != null" >
+                full_amount = #{fullAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="earlyMinutes != null" >
+                early_minutes = #{earlyMinutes,jdbcType=INTEGER},
+            </if>
+            <if test="supportDays != null" >
+                support_days = #{supportDays,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null" >
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="shopName != null" >
+                shop_name = #{shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="shopid != null" >
+                shopid = #{shopid,jdbcType=INTEGER},
+            </if>
+            <if test="cateid != null" >
+                cateid = #{cateid,jdbcType=INTEGER},
+            </if>
+            <if test="areaRange != null" >
+                area_range = #{areaRange,jdbcType=VARCHAR},
+            </if>
+            <if test="cashOnDelivery != null" >
+                cash_on_delivery = #{cashOnDelivery,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null" >
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="notice != null" >
+                notice = #{notice,jdbcType=VARCHAR},
+            </if>
+            <if test="supportReservedDays != null" >
+                support_reserved_days = #{supportReservedDays,jdbcType=VARCHAR},
+            </if>
+            <if test="supportRestTimeOrder != null" >
+                support_rest_time_order = #{supportRestTimeOrder,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceId != null" >
+                source_id = #{sourceId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where sid = #{sid,jdbcType=INTEGER}
+        and upd_eac =  ( #{updEac,jdbcType=BIGINT} -1)
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.beehive.erp.model.Shoprules" >
+    update dd_shoprules
+    set service_tag = #{serviceTag,jdbcType=INTEGER},
+      shop_id = #{shopId,jdbcType=INTEGER},
+      cate_id = #{cateId,jdbcType=INTEGER},
+      delivery_time = #{deliveryTime,jdbcType=VARCHAR},
+      delivery_amount = #{deliveryAmount,jdbcType=DECIMAL},
+      minimum_amount = #{minimumAmount,jdbcType=DECIMAL},
+      full_amount = #{fullAmount,jdbcType=DECIMAL},
+      early_minutes = #{earlyMinutes,jdbcType=INTEGER},
+      support_days = #{supportDays,jdbcType=INTEGER},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shopid = #{shopid,jdbcType=INTEGER},
+      cateid = #{cateid,jdbcType=INTEGER},
+      area_range = #{areaRange,jdbcType=VARCHAR},
+      cash_on_delivery = #{cashOnDelivery,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      notice = #{notice,jdbcType=VARCHAR},
+      support_reserved_days = #{supportReservedDays,jdbcType=VARCHAR},
+      support_rest_time_order = #{supportRestTimeOrder,jdbcType=VARCHAR},
+      source_id = #{sourceId,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+      and upd_eac =  ( #{updEac,jdbcType=BIGINT} -1) 
+  </update>
+    <!--========================以下自定义方法=====================================-->
+    <select id="selectByShopIdCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select
+        count(1)
+        from dd_shoprules
+        where shop_id = #{shopId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByShopId" parameterType="java.lang.Integer" >
+        delete from dd_shoprules
+        where shop_id = #{shopId,jdbcType=INTEGER}
+    </delete>
+</mapper>
