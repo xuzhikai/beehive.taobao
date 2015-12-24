@@ -14,9 +14,12 @@ public class ShoprulesConvert {
         JSONObject ja = jb.getJSONObject("waimai_shop_businessrules_get_response").getJSONObject("result");
         //需店铺营业规则				
         Shoprules shoprules = new Shoprules();
-        
-        	 
-    	shoprules.setAreaRange(ja.getString("area_range"));
+
+        if(ja.containsKey("area_range")){
+            shoprules.setAreaRange(ja.getString("area_range"));
+        }else{
+            shoprules.setAreaRange("");
+        }
     	
     	shoprules.setCashOnDelivery(Integer.valueOf(ja.getString("cash_on_delivery")));
     	
@@ -25,8 +28,12 @@ public class ShoprulesConvert {
     	shoprules.setCateid(Integer.valueOf(ja.getString("cateid")));
     	
     	shoprules.setDeliveryAmount(StringToBigDecimal(ja.getString("delivery_amount")));
-    	
-    	shoprules.setDeliveryTime(ja.getString("delivery_time"));
+
+        if(ja.containsKey("delivery_time")){
+            shoprules.setDeliveryTime(ja.getString("delivery_time"));
+        }else{
+            shoprules.setDeliveryTime("");
+        }
     	
     	shoprules.setEarlyMinutes(Integer.valueOf(ja.getString("early_minutes")));
     	

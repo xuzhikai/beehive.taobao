@@ -74,9 +74,9 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
                         //淘点点店铺导入
                         shopinfoImport(source);
                         //商品信息导入
-                        itemImport(source);
+                        itemImport();
                         //店铺营业规则导入
-                        shoprulesImport(source);
+                        shoprulesImport();
                     }
                 }else{
                     logger.info("没有对应的SESSIONKEY!");
@@ -111,6 +111,8 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
         WaimaiShopListRequest req = new WaimaiShopListRequest();
 
         req.setPage(Constant.PAGE_NUM_SHOP);
+
+//        req.setStatus(1l);
 
         req.setPageSize(Constant.PAGE_SIZE_SHOP);
 
@@ -161,7 +163,7 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
      * @return
      * @throws Exception
      */
-    public void itemImport(Source source)throws Exception{
+    public void itemImport()throws Exception{
 
         //获取所有的店铺
         List<Shopinfo> shopinfos= shopinfoService.findAll();
@@ -175,12 +177,12 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
                     itemService.deleteByShopId(shopinfo.getShopid());
                 }
                 //获取同步的产品列表
-                List<Item> items = getItemList(shopinfo.getShopid(),source.getSessionKey());
+                List<Item> items = getItemList(shopinfo.getShopid(),shopinfo.getSourceId());
 
                 if (null!=items && items.size()>0){
                     for (Item item:items){
                         item.setShopid(shopinfo.getShopid());
-                        item.setSourceId(source.getSourceId());
+                        item.setSourceId(shopinfo.getSourceId());
                         //插入到db中
                         itemService.insertSelective(item);
                     }
@@ -198,7 +200,7 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
      * @param shopid
      * @return
      */
-    public List<Item> getItemList(Integer shopid,String sessionKey)throws Exception{
+    public List<Item> getItemList(Integer shopid,String sourceId)throws Exception{
         TaobaoClient client = new DefaultTaobaoClient(URL, APPKEY, APPSECRET);
 
         WaimaiItemlistGetRequest req = new WaimaiItemlistGetRequest();
@@ -213,7 +215,9 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
         //要获取产品的字段
         req.setFields(Constant.ITEM_FIELDS);
 
-        WaimaiItemlistGetResponse rsp = client.execute(req, sessionKey);
+        Source source = sourceService.selectBySourceId(sourceId);
+
+        WaimaiItemlistGetResponse rsp = client.execute(req, source.getSessionKey());
 
         ItemConvert itemConvert = new ItemConvert();
 
@@ -224,19 +228,19 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
 
     /**
      * 店铺营业规则导入
-     * @param source
+     * @param
      * @throws Exception
      */
-    public void shoprulesImport(Source source)throws Exception{
+    public void shoprulesImport()throws Exception{
         //获取所有的店铺
         List<Shopinfo> shopinfos= shopinfoService.findAll();
 
         if (null!=shopinfos && shopinfos.size()>0){
             for (Shopinfo shopinfo:shopinfos){
 
-                Shoprules shoprules=  getShoprules(shopinfo.getShopid(),source.getSessionKey());
+                Shoprules shoprules=  getShoprules(shopinfo.getShopid(),shopinfo.getSourceId());
 
-                shoprules.setSourceId(source.getSourceId());
+                shoprules.setSourceId(shopinfo.getSourceId());
 
                 int count =shoprulesService.selectByShopIdCount(shopinfo.getShopid());
 
@@ -253,18 +257,20 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
     /**
      * 根据店铺id和sessionkey获取店铺营业规则JSON并解析为实例对象
      * @param shopid
-     * @param sessionKey
+     * @param sourceId
      * @return
      * @throws Exception
      */
-    public Shoprules getShoprules(Integer shopid,String sessionKey)throws Exception{
+    public Shoprules getShoprules(Integer shopid,String sourceId)throws Exception{
         TaobaoClient client = new DefaultTaobaoClient(URL, APPKEY, APPSECRET);
 
         WaimaiShopBusinessrulesGetRequest req = new WaimaiShopBusinessrulesGetRequest();
         //商铺id
         req.setShopid(Long.valueOf(shopid));
 
-        WaimaiShopBusinessrulesGetResponse rsp = client.execute(req, sessionKey);
+        Source source = sourceService.selectBySourceId(sourceId);
+
+        WaimaiShopBusinessrulesGetResponse rsp = client.execute(req, source.getSessionKey());
 
         ShoprulesConvert shoprulesConvert = new ShoprulesConvert();
 

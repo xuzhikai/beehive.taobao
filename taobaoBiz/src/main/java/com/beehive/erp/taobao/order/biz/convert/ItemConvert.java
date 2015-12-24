@@ -21,51 +21,50 @@ public class ItemConvert {
         //JSON格式数据解析对象
         JSONObject jb = JSONObject.fromObject(jsonString);
 
-        JSONArray ja = jb.getJSONObject("waimai_itemlist_get_response").getJSONObject("data_list")
-                .getJSONArray("top_auction");
-
         java.util.List<Item> items = new java.util.LinkedList<Item>();
 
-        for(int i=0;i<ja.size();i++){
-            //需返回的商品对象
-            Item item = new Item();
+        if (jb.getJSONObject("waimai_itemlist_get_response").getJSONObject("data_list").containsKey("top_auction")){
+            JSONArray ja = jb.getJSONObject("waimai_itemlist_get_response").getJSONObject("data_list")
+                    .getJSONArray("top_auction");
 
-            item.setAuctionDesc(ja.getJSONObject(i).getString("auction_desc"));
+            for(int i=0;i<ja.size();i++){
+                //需返回的商品对象
+                Item item = new Item();
 
-            item.setAuctionStatus(Integer.valueOf(ja.getJSONObject(i).getString("auction_status")));
+                item.setAuctionDesc(ja.getJSONObject(i).getString("auction_desc"));
 
-            item.setCategoryId(ja.getJSONObject(i).getString("category_id"));
+                item.setAuctionStatus(Integer.valueOf(ja.getJSONObject(i).getString("auction_status")));
 
-            item.setCreateTime(ja.getJSONObject(i).getString("create_time"));
+                item.setCategoryId(ja.getJSONObject(i).getString("category_id"));
 
-            if(ja.getJSONObject(i).containsKey("goods_no")){
-                item.setGoodsNo(ja.getJSONObject(i).getString("goods_no"));
-            }else{
-                item.setGoodsNo("");
+                item.setCreateTime(ja.getJSONObject(i).getString("create_time"));
+
+                if(ja.getJSONObject(i).containsKey("goods_no")){
+                    item.setGoodsNo(ja.getJSONObject(i).getString("goods_no"));
+                }else{
+                    item.setGoodsNo("");
+                }
+
+                item.setItemId(ja.getJSONObject(i).getString("item_id"));
+
+                item.setLimitBuy(Integer.valueOf(ja.getJSONObject(i).getString("limit_buy")));
+
+                item.setModifyTime(ja.getJSONObject(i).getString("modify_time"));
+
+                item.setOldQuantity(Integer.valueOf(ja.getJSONObject(i).getString("old_quantity")));
+
+                item.setOriPrice(StringToBigDecimal(ja.getJSONObject(i).getString("ori_price")));
+
+                item.setPrice(StringToBigDecimal(ja.getJSONObject(i).getString("price")));
+
+                item.setQuantity(Integer.valueOf(ja.getJSONObject(i).getString("quantity")));
+
+                item.setTitle(ja.getJSONObject(i).getString("title"));
+
+                items.add(item);
             }
-
-            item.setItemId(ja.getJSONObject(i).getString("item_id"));
-
-            item.setLimitBuy(Integer.valueOf(ja.getJSONObject(i).getString("limit_buy")));
-
-            item.setModifyTime(ja.getJSONObject(i).getString("modify_time"));
-
-            item.setOldQuantity(Integer.valueOf(ja.getJSONObject(i).getString("old_quantity")));
-
-            item.setOriPrice(StringToBigDecimal(ja.getJSONObject(i).getString("ori_price")));
-
-            item.setPrice(StringToBigDecimal(ja.getJSONObject(i).getString("price")));
-
-            item.setQuantity(Integer.valueOf(ja.getJSONObject(i).getString("quantity")));
-
-            item.setTitle(ja.getJSONObject(i).getString("title"));
-
-            items.add(item);
         }
-
         return items;
-
-
     }
 
     /**
