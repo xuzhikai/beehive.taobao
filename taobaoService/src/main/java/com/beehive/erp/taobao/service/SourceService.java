@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface SourceService {
     List<Source> findAll();
+
+    Source selectBySourceId(String sourceId);
 }

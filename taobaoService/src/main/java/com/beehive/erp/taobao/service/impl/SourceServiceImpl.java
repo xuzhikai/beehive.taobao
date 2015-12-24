@@ -21,4 +21,9 @@ public class SourceServiceImpl implements SourceService {
     public List<Source> findAll() {
         return sourceDao.findAll();
     }
+
+    @Override
+    public Source selectBySourceId(String sourceId) {
+        return sourceDao.selectBySourceId(sourceId);
+    }
 }
