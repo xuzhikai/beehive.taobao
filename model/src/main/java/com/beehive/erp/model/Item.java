@@ -35,6 +35,8 @@ public class Item {
 
     private String sourceId;
 
+    private String picUrl;
+
     public Integer getSid() {
         return sid;
     }
@@ -162,5 +164,13 @@ public class Item {
 
     public void setSourceId(String sourceId) {
         this.sourceId = sourceId;
+    }
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 }
