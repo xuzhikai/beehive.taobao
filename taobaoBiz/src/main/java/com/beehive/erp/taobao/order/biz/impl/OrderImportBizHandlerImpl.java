@@ -73,10 +73,12 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
                     for (Source source:sourceList){
                         //淘点点店铺导入
                         shopinfoImport(source);
-                        //商品信息导入
-                        itemImport();
+
                         //店铺营业规则导入
                         shoprulesImport();
+
+                        //商品信息导入
+                        itemImport();
                     }
                 }else{
                     logger.info("没有对应的SESSIONKEY!");

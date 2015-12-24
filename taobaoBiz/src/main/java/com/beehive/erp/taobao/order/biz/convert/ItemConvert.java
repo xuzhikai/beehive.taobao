@@ -45,6 +45,12 @@ public class ItemConvert {
                     item.setGoodsNo("");
                 }
 
+                if (ja.getJSONObject(i).containsKey("pic_url")){
+                    item.setPicUrl(ja.getJSONObject(i).getString("pic_url"));
+                }else{
+                    item.setPicUrl("");
+                }
+
                 item.setItemId(ja.getJSONObject(i).getString("item_id"));
 
                 item.setLimitBuy(Integer.valueOf(ja.getJSONObject(i).getString("limit_buy")));
