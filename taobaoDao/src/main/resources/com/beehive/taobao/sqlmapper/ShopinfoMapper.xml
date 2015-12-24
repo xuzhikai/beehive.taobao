@@ -186,4 +186,9 @@
         delete from dd_shopinfo
         where shopid = #{shopid,jdbcType=INTEGER}
     </delete>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from dd_shopinfo
+    </select>
 </mapper>
