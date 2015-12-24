@@ -11,6 +11,7 @@
         <result column="goods_no" property="goodsNo" jdbcType="VARCHAR" />
         <result column="auction_status" property="auctionStatus" jdbcType="INTEGER" />
         <result column="quantity" property="quantity" jdbcType="INTEGER" />
+        <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
         <result column="limit_buy" property="limitBuy" jdbcType="INTEGER" />
         <result column="auction_desc" property="auctionDesc" jdbcType="VARCHAR" />
         <result column="category_id" property="categoryId" jdbcType="VARCHAR" />
@@ -21,7 +22,8 @@
     </resultMap>
     <sql id="Base_Column_List" >
         sid, shopid, item_id, title, price, ori_price, goods_no, auction_status, quantity,
-        limit_buy, auction_desc, category_id, old_quantity, create_time, modify_time, source_id
+        pic_url, limit_buy, auction_desc, category_id, old_quantity, create_time, modify_time,
+        source_id
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
@@ -37,15 +39,15 @@
         insert into dd_itemlist (sid, shopid, item_id,
         title, price, ori_price,
         goods_no, auction_status, quantity,
-        limit_buy, auction_desc, category_id,
-        old_quantity, create_time, modify_time,
-        source_id)
+        pic_url, limit_buy, auction_desc,
+        category_id, old_quantity, create_time,
+        modify_time, source_id)
         values (#{sid,jdbcType=INTEGER}, #{shopid,jdbcType=INTEGER}, #{itemId,jdbcType=VARCHAR},
         #{title,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{oriPrice,jdbcType=DECIMAL},
         #{goodsNo,jdbcType=VARCHAR}, #{auctionStatus,jdbcType=INTEGER}, #{quantity,jdbcType=INTEGER},
-        #{limitBuy,jdbcType=INTEGER}, #{auctionDesc,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR},
-        #{oldQuantity,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR},
-        #{sourceId,jdbcType=VARCHAR})
+        #{picUrl,jdbcType=VARCHAR}, #{limitBuy,jdbcType=INTEGER}, #{auctionDesc,jdbcType=VARCHAR},
+        #{categoryId,jdbcType=VARCHAR}, #{oldQuantity,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR},
+        #{modifyTime,jdbcType=VARCHAR}, #{sourceId,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.beehive.erp.model.Item" >
         insert into dd_itemlist
@@ -76,6 +78,9 @@
             </if>
             <if test="quantity != null" >
                 quantity,
+            </if>
+            <if test="picUrl != null" >
+                pic_url,
             </if>
             <if test="limitBuy != null" >
                 limit_buy,
@@ -127,6 +132,9 @@
             <if test="quantity != null" >
                 #{quantity,jdbcType=INTEGER},
             </if>
+            <if test="picUrl != null" >
+                #{picUrl,jdbcType=VARCHAR},
+            </if>
             <if test="limitBuy != null" >
                 #{limitBuy,jdbcType=INTEGER},
             </if>
@@ -177,6 +185,9 @@
             <if test="quantity != null" >
                 quantity = #{quantity,jdbcType=INTEGER},
             </if>
+            <if test="picUrl != null" >
+                pic_url = #{picUrl,jdbcType=VARCHAR},
+            </if>
             <if test="limitBuy != null" >
                 limit_buy = #{limitBuy,jdbcType=INTEGER},
             </if>
@@ -212,6 +223,7 @@
       goods_no = #{goodsNo,jdbcType=VARCHAR},
       auction_status = #{auctionStatus,jdbcType=INTEGER},
       quantity = #{quantity,jdbcType=INTEGER},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
       limit_buy = #{limitBuy,jdbcType=INTEGER},
       auction_desc = #{auctionDesc,jdbcType=VARCHAR},
       category_id = #{categoryId,jdbcType=VARCHAR},
