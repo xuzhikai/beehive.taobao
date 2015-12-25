@@ -107,7 +107,7 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
      * @return
      * @throws Exception
      */
-    public List<Shopinfo> getShopList(String sessionKey)throws Exception{
+    public List<Shopinfo> getShopList(String sessionKey){
         TaobaoClient client = new DefaultTaobaoClient(URL, APPKEY, APPSECRET);
 
         WaimaiShopListRequest req = new WaimaiShopListRequest();
@@ -118,19 +118,22 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
 
         req.setPageSize(Constant.PAGE_SIZE_SHOP);
 
-        WaimaiShopListResponse res = client.execute(req,sessionKey);
+        try {
+            WaimaiShopListResponse res = client.execute(req,sessionKey);
+            ShopConvert shopConvert = new ShopConvert();
 
-        ShopConvert shopConvert = new ShopConvert();
-
-        return shopConvert.analyticJson(res.getBody());
-
+            return shopConvert.analyticJson(res.getBody());
+        }catch (Exception e){
+            logger.error("淘点点获取数据失败"+e);
+        }
+        return null;
     }
 
     /**
      * 导入店铺信息
      * @throws Exception
      */
-    public void shopinfoImport(Source source)throws Exception{
+    public void shopinfoImport(Source source){
         //获取淘点点商店列表
         List<Shopinfo> shopinfos = getShopList(source.getSessionKey());
 
@@ -165,7 +168,7 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
      * @return
      * @throws Exception
      */
-    public void itemImport()throws Exception{
+    public void itemImport(){
 
         //获取所有的店铺
         List<Shopinfo> shopinfos= shopinfoService.findAll();
@@ -202,7 +205,7 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
      * @param shopid
      * @return
      */
-    public List<Item> getItemList(Integer shopid,String sourceId)throws Exception{
+    public List<Item> getItemList(Integer shopid,String sourceId){
         TaobaoClient client = new DefaultTaobaoClient(URL, APPKEY, APPSECRET);
 
         WaimaiItemlistGetRequest req = new WaimaiItemlistGetRequest();
@@ -218,14 +221,19 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
         req.setFields(Constant.ITEM_FIELDS);
 
         Source source = sourceService.selectBySourceId(sourceId);
+        try {
+            WaimaiItemlistGetResponse rsp = client.execute(req, source.getSessionKey());
 
-        WaimaiItemlistGetResponse rsp = client.execute(req, source.getSessionKey());
+            ItemConvert itemConvert = new ItemConvert();
 
-        ItemConvert itemConvert = new ItemConvert();
+            List<Item> items= itemConvert.analyticJson(rsp.getBody());
 
-        List<Item> items= itemConvert.analyticJson(rsp.getBody());
+            return items;
 
-        return items;
+        }catch (Exception e){
+            logger.error("淘点点获取数据失败"+e);
+        }
+        return null;
     }
 
     /**
@@ -233,7 +241,7 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
      * @param
      * @throws Exception
      */
-    public void shoprulesImport()throws Exception{
+    public void shoprulesImport(){
         //获取所有的店铺
         List<Shopinfo> shopinfos= shopinfoService.findAll();
 
@@ -263,7 +271,7 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
      * @return
      * @throws Exception
      */
-    public Shoprules getShoprules(Integer shopid,String sourceId)throws Exception{
+    public Shoprules getShoprules(Integer shopid,String sourceId){
         TaobaoClient client = new DefaultTaobaoClient(URL, APPKEY, APPSECRET);
 
         WaimaiShopBusinessrulesGetRequest req = new WaimaiShopBusinessrulesGetRequest();
@@ -272,10 +280,14 @@ public class OrderImportBizHandlerImpl implements OrderImportBizHandler {
 
         Source source = sourceService.selectBySourceId(sourceId);
 
-        WaimaiShopBusinessrulesGetResponse rsp = client.execute(req, source.getSessionKey());
+        try {
+            WaimaiShopBusinessrulesGetResponse rsp = client.execute(req, source.getSessionKey());
+            ShoprulesConvert shoprulesConvert = new ShoprulesConvert();
 
-        ShoprulesConvert shoprulesConvert = new ShoprulesConvert();
-
-        return shoprulesConvert.analyticJson(rsp.getBody());
+            return shoprulesConvert.analyticJson(rsp.getBody());
+        }catch (Exception e){
+            logger.error("淘点点获取数据失败"+e);
+        }
+          return  null;
     }
 }
