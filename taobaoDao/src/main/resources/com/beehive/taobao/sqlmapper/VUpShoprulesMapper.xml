@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.beehive.erp.taobao.dao.VUpShoprulesDao" >
+  <resultMap id="BaseResultMap" type="com.beehive.erp.model.VUpShoprules" >
+    <result column="minimum_amount" property="minimumAmount" jdbcType="DECIMAL" />
+    <result column="delivery_amount" property="deliveryAmount" jdbcType="DECIMAL" />
+    <result column="full_amount" property="fullAmount" jdbcType="DECIMAL" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="early_minutes" property="earlyMinutes" jdbcType="INTEGER" />
+    <result column="support_days" property="supportDays" jdbcType="INTEGER" />
+    <result column="shopid" property="shopid" jdbcType="INTEGER" />
+    <result column="delivery_time" property="deliveryTime" jdbcType="VARCHAR" />
+    <result column="area_range" property="areaRange" jdbcType="VARCHAR" />
+    <result column="delivery_area" property="deliveryArea" jdbcType="VARCHAR" />
+    <result column="source_id" property="sourceId" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.beehive.erp.model.VUpShoprules" >
+    insert into v_up_shoprules (minimum_amount, delivery_amount, full_amount, 
+      mobile, early_minutes, support_days, 
+      shopid, delivery_time, area_range, 
+      delivery_area, source_id)
+    values (#{minimumAmount,jdbcType=DECIMAL}, #{deliveryAmount,jdbcType=DECIMAL}, #{fullAmount,jdbcType=DECIMAL}, 
+      #{mobile,jdbcType=VARCHAR}, #{earlyMinutes,jdbcType=INTEGER}, #{supportDays,jdbcType=INTEGER}, 
+      #{shopid,jdbcType=INTEGER}, #{deliveryTime,jdbcType=VARCHAR}, #{areaRange,jdbcType=VARCHAR}, 
+      #{deliveryArea,jdbcType=VARCHAR}, #{sourceId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.beehive.erp.model.VUpShoprules" >
+    insert into v_up_shoprules
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="minimumAmount != null" >
+        minimum_amount,
+      </if>
+      <if test="deliveryAmount != null" >
+        delivery_amount,
+      </if>
+      <if test="fullAmount != null" >
+        full_amount,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="earlyMinutes != null" >
+        early_minutes,
+      </if>
+      <if test="supportDays != null" >
+        support_days,
+      </if>
+      <if test="shopid != null" >
+        shopid,
+      </if>
+      <if test="deliveryTime != null" >
+        delivery_time,
+      </if>
+      <if test="areaRange != null" >
+        area_range,
+      </if>
+      <if test="deliveryArea != null" >
+        delivery_area,
+      </if>
+      <if test="sourceId != null" >
+        source_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="minimumAmount != null" >
+        #{minimumAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryAmount != null" >
+        #{deliveryAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="fullAmount != null" >
+        #{fullAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="earlyMinutes != null" >
+        #{earlyMinutes,jdbcType=INTEGER},
+      </if>
+      <if test="supportDays != null" >
+        #{supportDays,jdbcType=INTEGER},
+      </if>
+      <if test="shopid != null" >
+        #{shopid,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryTime != null" >
+        #{deliveryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="areaRange != null" >
+        #{areaRange,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryArea != null" >
+        #{deliveryArea,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceId != null" >
+        #{sourceId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <!--========================以下自定义方法=====================================-->
+    <select id="findAll" resultType="com.beehive.erp.model.VUpShoprules">
+        select
+        *
+        from v_up_shoprules
+    </select>
+</mapper>

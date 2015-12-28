@@ -168,7 +168,6 @@
             </if>
         </set>
         where sid = #{sid,jdbcType=INTEGER}
-        and upd_eac =  ( #{updEac,jdbcType=BIGINT} -1)
     </update>
     <update id="updateByPrimaryKey" parameterType="com.beehive.erp.model.Shopinfo" >
     update dd_shopinfo
@@ -185,7 +184,6 @@
       shopoutid = #{shopoutid,jdbcType=VARCHAR},
       source_id = #{sourceId,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=INTEGER}
-      and upd_eac =  ( #{updEac,jdbcType=BIGINT} -1) 
   </update>
     <select id="selectByShopid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
         select

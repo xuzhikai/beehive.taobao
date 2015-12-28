@@ -256,7 +256,6 @@
             </if>
         </set>
         where sid = #{sid,jdbcType=INTEGER}
-        and upd_eac =  ( #{updEac,jdbcType=BIGINT} -1)
     </update>
     <update id="updateByPrimaryKey" parameterType="com.beehive.erp.model.Shoprules" >
     update dd_shoprules
@@ -281,7 +280,6 @@
       support_rest_time_order = #{supportRestTimeOrder,jdbcType=VARCHAR},
       source_id = #{sourceId,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=INTEGER}
-      and upd_eac =  ( #{updEac,jdbcType=BIGINT} -1) 
   </update>
     <!--========================以下自定义方法=====================================-->
     <select id="selectByShopIdCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">

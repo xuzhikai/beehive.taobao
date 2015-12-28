@@ -61,14 +61,12 @@
       </if>
     </set>
     where sid = #{sid,jdbcType=BIGINT}
-      and upd_eac =  ( #{updEac,jdbcType=BIGINT} -1) 
   </update>
   <update id="updateByPrimaryKey" parameterType="com.beehive.erp.model.Source" >
     update sys_source
     set source_id = #{sourceId,jdbcType=VARCHAR},
       session_key = #{sessionKey,jdbcType=VARCHAR}
     where sid = #{sid,jdbcType=BIGINT}
-      and upd_eac =  ( #{updEac,jdbcType=BIGINT} -1) 
   </update>
 
     <select id="findAll" resultMap="BaseResultMap">

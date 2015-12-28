@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.beehive.erp.taobao.dao.UpLogDao" >
+  <resultMap id="BaseResultMap" type="com.beehive.erp.model.UpLog" >
+    <id column="sid" property="sid" jdbcType="BIGINT" />
+    <result column="up_type" property="upType" jdbcType="VARCHAR" />
+    <result column="up_id" property="upId" jdbcType="VARCHAR" />
+    <result column="up_code" property="upCode" jdbcType="VARCHAR" />
+    <result column="up_desc" property="upDesc" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, up_type, up_id, up_code, up_desc, create_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from up_log
+    where sid = #{sid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from up_log
+    where sid = #{sid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.beehive.erp.model.UpLog" >
+    insert into up_log (sid, up_type, up_id, 
+      up_code, up_desc, create_date
+      )
+    values (#{sid,jdbcType=BIGINT}, #{upType,jdbcType=VARCHAR}, #{upId,jdbcType=VARCHAR}, 
+      #{upCode,jdbcType=VARCHAR}, #{upDesc,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.beehive.erp.model.UpLog" >
+    insert into up_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="upType != null" >
+        up_type,
+      </if>
+      <if test="upId != null" >
+        up_id,
+      </if>
+      <if test="upCode != null" >
+        up_code,
+      </if>
+      <if test="upDesc != null" >
+        up_desc,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=BIGINT},
+      </if>
+      <if test="upType != null" >
+        #{upType,jdbcType=VARCHAR},
+      </if>
+      <if test="upId != null" >
+        #{upId,jdbcType=VARCHAR},
+      </if>
+      <if test="upCode != null" >
+        #{upCode,jdbcType=VARCHAR},
+      </if>
+      <if test="upDesc != null" >
+        #{upDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.beehive.erp.model.UpLog" >
+    update up_log
+    <set >
+      <if test="upType != null" >
+        up_type = #{upType,jdbcType=VARCHAR},
+      </if>
+      <if test="upId != null" >
+        up_id = #{upId,jdbcType=VARCHAR},
+      </if>
+      <if test="upCode != null" >
+        up_code = #{upCode,jdbcType=VARCHAR},
+      </if>
+      <if test="upDesc != null" >
+        up_desc = #{upDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.beehive.erp.model.UpLog" >
+    update up_log
+    set up_type = #{upType,jdbcType=VARCHAR},
+      up_id = #{upId,jdbcType=VARCHAR},
+      up_code = #{upCode,jdbcType=VARCHAR},
+      up_desc = #{upDesc,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=BIGINT}
+  </update>
+</mapper>
