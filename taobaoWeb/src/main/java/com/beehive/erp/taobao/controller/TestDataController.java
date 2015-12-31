@@ -16,6 +16,7 @@ public class TestDataController extends BaseController{
     @RequestMapping(value = "/test")
     @ResponseBody
     public String test( @RequestBody String data){
+        logger.info("test only");
        return "test:"+data;
     }
 }
