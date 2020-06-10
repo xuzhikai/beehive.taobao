@@ -27,7 +27,7 @@
 		<mybatis.version>3.2.2</mybatis.version>
 		<mybatis-spring.version>1.2.0</mybatis-spring.version>
 		<mybatis-ehcache.version>1.0.0</mybatis-ehcache.version>
-		<commons-beanutils.version>20030211.134440</commons-beanutils.version>
+		<commons-beanutils.version>1.9.2</commons-beanutils.version>
 		<cxf.version>2.7.5</cxf.version>
 		<commons.lang.version>2.6</commons.lang.version>
 		<activemq.version>5.8.0</activemq.version>

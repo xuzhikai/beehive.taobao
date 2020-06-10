@@ -42,7 +42,7 @@
 		<slf4.version>1.7.5</slf4.version>
 		<jackson-mapper.version>1.9.12</jackson-mapper.version>
 		<jackson-core.version>1.9.12</jackson-core.version>
-		<commons-beanutils.version>1.8.3</commons-beanutils.version>
+		<commons-beanutils.version>1.9.2</commons-beanutils.version>
 		<ojdbc.version>11.2.0</ojdbc.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
 		<axis.version>1.4</axis.version>
