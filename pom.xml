@@ -33,7 +33,7 @@
 		<mybatis.version>3.2.2</mybatis.version>
 		<mybatis-spring.version>1.2.0</mybatis-spring.version>
 		<mybatis-ehcache.version>1.0.0</mybatis-ehcache.version>
-		<junit.version>4.11</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<commons-io.version>20030203.000550</commons-io.version>
 		<commons.lang.version>2.6</commons.lang.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
