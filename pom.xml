@@ -38,7 +38,7 @@
 		<commons.lang.version>2.6</commons.lang.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
 		<freemarker.version>2.3.19</freemarker.version>
-		<logback.version>1.0.13</logback.version>
+		<logback.version>1.2.0</logback.version>
 		<slf4.version>1.7.5</slf4.version>
 		<jackson-mapper.version>1.9.12</jackson-mapper.version>
 		<jackson-core.version>1.9.12</jackson-core.version>
