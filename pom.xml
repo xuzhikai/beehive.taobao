@@ -50,7 +50,7 @@
 		<jcifs.version>1.3.17</jcifs.version>
         <cxf.version>2.7.5</cxf.version>
         <commons-beanutils.version>1.8.3</commons-beanutils.version>
-        <h2.version>1.3.172</h2.version>
+        <h2.version>2.1.210</h2.version>
 	</properties>
 
 	<dependencyManagement>
