@@ -29,7 +29,7 @@
 		<chinadrtv.common.version>1.0</chinadrtv.common.version>
 		<!-- Normal dependency -->
 		<activemq.version>5.8.0</activemq.version>
-		<spring.version>3.2.3.RELEASE</spring.version>
+		<spring.version>5.2.22.RELEASE</spring.version>
 		<mybatis.version>3.2.2</mybatis.version>
 		<mybatis-spring.version>1.2.0</mybatis-spring.version>
 		<mybatis-ehcache.version>1.0.0</mybatis-ehcache.version>
